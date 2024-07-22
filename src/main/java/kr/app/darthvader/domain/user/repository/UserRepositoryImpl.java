@@ -21,6 +21,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
                         tuser.userNm,
                         tuser.role))
                 .from(tuser)
+                .limit(1000)
                 .fetch();
     }
 
