@@ -21,18 +21,18 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/user")
-    public RequestResult<TuserResponseDto> user(@RequestBody @Valid TuserRequestDto dto) throws Exception {
+    public RequestResult<TuserResponseDto> saveUser(@RequestBody @Valid TuserRequestDto dto) {
         return new RequestResult<>(userService.saveUser(dto));
     }
 
     @GetMapping("/user")
-    public ResponseListResult<List<TuserResponseDto>> user() {
-        List<TuserResponseDto> tuserResponseDto = userService.selectUser();
-        return new ResponseListResult<>(tuserResponseDto, tuserResponseDto.size());
+    public ResponseListResult<List<TuserResponseDto>> selectUser() {
+        List<TuserResponseDto> tuserResponseDtoList = userService.selectUser();
+        return new ResponseListResult<>(tuserResponseDtoList, tuserResponseDtoList.size());
     }
 
     @GetMapping("/user/{id}")
-    public ResponseMapResult<TuserResponseDto> userById(@PathVariable("id") String userId) {
+    public ResponseMapResult<TuserResponseDto> selectUserById(@PathVariable("id") String userId) {
         return new ResponseMapResult<>(userService.selectUserById(userId));
     }
 

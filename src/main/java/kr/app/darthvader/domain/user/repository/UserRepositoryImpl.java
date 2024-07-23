@@ -21,6 +21,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
                         tuser.userNm,
                         tuser.role))
                 .from(tuser)
+                .where(tuser.delYn.eq("N"))
                 .limit(1000)
                 .fetch();
     }
@@ -32,7 +33,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
                         tuser.userNm,
                         tuser.role))
                 .from(tuser)
-                .where(tuser.userId.eq(userId))
+                .where(tuser.userId.eq(userId), tuser.delYn.eq("N"))
                 .fetchOne();
     }
 
