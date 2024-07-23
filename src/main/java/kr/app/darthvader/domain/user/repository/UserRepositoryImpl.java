@@ -1,8 +1,8 @@
 package kr.app.darthvader.domain.user.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import kr.app.darthvader.domain.user.model.dto.QTuserResponseDto;
-import kr.app.darthvader.domain.user.model.dto.TuserResponseDto;
+import kr.app.darthvader.domain.user.model.dto.response.QTuserResponseDto;
+import kr.app.darthvader.domain.user.model.dto.response.TuserResponseDto;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;

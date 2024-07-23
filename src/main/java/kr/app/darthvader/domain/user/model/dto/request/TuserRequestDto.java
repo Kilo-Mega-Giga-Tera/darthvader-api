@@ -1,4 +1,4 @@
-package kr.app.darthvader.domain.user.model.dto;
+package kr.app.darthvader.domain.user.model.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.querydsl.core.annotations.QueryProjection;

@@ -1,10 +1,10 @@
 package kr.app.darthvader.domain.board.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import kr.app.darthvader.domain.board.model.dto.BoardDetailDto;
-import kr.app.darthvader.domain.board.model.dto.BoardListResponseDto;
-import kr.app.darthvader.domain.board.model.dto.QBoardDetailDto;
-import kr.app.darthvader.domain.board.model.dto.QBoardListResponseDto;
+import kr.app.darthvader.domain.board.model.dto.response.BoardDetailResponseDto;
+import kr.app.darthvader.domain.board.model.dto.response.BoardListResponseDto;
+import kr.app.darthvader.domain.board.model.dto.response.QBoardDetailResponseDto;
+import kr.app.darthvader.domain.board.model.dto.response.QBoardListResponseDto;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -27,9 +27,9 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
     }
 
     @Override
-    public BoardDetailDto selectBoardDetail(Long seq) {
+    public BoardDetailResponseDto selectBoardDetail(Long seq) {
         return query
-                .select(new QBoardDetailDto(tboard))
+                .select(new QBoardDetailResponseDto(tboard))
                 .from(tboard)
                 .where(tboard.id.eq(seq), tboard.delYn.eq("N"))
                 .fetchOne();

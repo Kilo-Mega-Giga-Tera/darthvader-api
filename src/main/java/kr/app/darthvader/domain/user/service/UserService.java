@@ -2,8 +2,8 @@ package kr.app.darthvader.domain.user.service;
 
 import kr.app.darthvader.global.error.exception.UserMessageException;
 import kr.app.darthvader.domain.user.repository.UserRepository;
-import kr.app.darthvader.domain.user.model.dto.TuserRequestDto;
-import kr.app.darthvader.domain.user.model.dto.TuserResponseDto;
+import kr.app.darthvader.domain.user.model.dto.request.TuserRequestDto;
+import kr.app.darthvader.domain.user.model.dto.response.TuserResponseDto;
 import kr.app.darthvader.domain.user.model.entity.Tuser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

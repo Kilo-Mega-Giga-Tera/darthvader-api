@@ -1,10 +1,10 @@
 package kr.app.darthvader.domain.board.controller;
 
 import jakarta.validation.Valid;
-import kr.app.darthvader.domain.board.model.dto.BoardDetailDto;
-import kr.app.darthvader.domain.board.model.dto.BoardListResponseDto;
-import kr.app.darthvader.domain.board.model.dto.BoardRequestDto;
-import kr.app.darthvader.domain.board.model.dto.BoardResponseDto;
+import kr.app.darthvader.domain.board.model.dto.response.BoardDetailResponseDto;
+import kr.app.darthvader.domain.board.model.dto.response.BoardListResponseDto;
+import kr.app.darthvader.domain.board.model.dto.request.BoardRequestDto;
+import kr.app.darthvader.domain.board.model.dto.response.BoardResponseDto;
 import kr.app.darthvader.domain.board.service.BoardService;
 import kr.app.darthvader.domain.common.model.dto.RequestResult;
 import kr.app.darthvader.domain.common.model.dto.ResponseListResult;
@@ -32,7 +32,7 @@ public class BoardController {
     }
 
     @GetMapping("/board/{seq}")
-    public ResponseMapResult<BoardDetailDto> selectBoardDetail(@PathVariable Long seq) {
+    public ResponseMapResult<BoardDetailResponseDto> selectBoardDetail(@PathVariable Long seq) {
         return new ResponseMapResult<>(boardService.selectBoardDetail(seq));
     }
 

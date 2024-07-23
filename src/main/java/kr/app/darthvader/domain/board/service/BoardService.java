@@ -1,9 +1,9 @@
 package kr.app.darthvader.domain.board.service;
 
-import kr.app.darthvader.domain.board.model.dto.BoardDetailDto;
-import kr.app.darthvader.domain.board.model.dto.BoardListResponseDto;
-import kr.app.darthvader.domain.board.model.dto.BoardRequestDto;
-import kr.app.darthvader.domain.board.model.dto.BoardResponseDto;
+import kr.app.darthvader.domain.board.model.dto.response.BoardDetailResponseDto;
+import kr.app.darthvader.domain.board.model.dto.response.BoardListResponseDto;
+import kr.app.darthvader.domain.board.model.dto.request.BoardRequestDto;
+import kr.app.darthvader.domain.board.model.dto.response.BoardResponseDto;
 import kr.app.darthvader.domain.board.model.entity.Tboard;
 import kr.app.darthvader.domain.board.repository.BoardRepository;
 import kr.app.darthvader.domain.user.model.entity.Tuser;
@@ -42,8 +42,8 @@ public class BoardService {
         return boardRepository.selectBoard();
     }
 
-    public BoardDetailDto selectBoardDetail(Long seq) {
-        BoardDetailDto dto = boardRepository.selectBoardDetail(seq);
+    public BoardDetailResponseDto selectBoardDetail(Long seq) {
+        BoardDetailResponseDto dto = boardRepository.selectBoardDetail(seq);
 
         if (ObjectUtils.isEmpty(dto)) {
             throw new UserMessageException("조회된 글이 없습니다.");

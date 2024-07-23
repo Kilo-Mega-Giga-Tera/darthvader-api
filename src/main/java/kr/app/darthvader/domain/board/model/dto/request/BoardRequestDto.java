@@ -1,4 +1,4 @@
-package kr.app.darthvader.domain.board.model.dto;
+package kr.app.darthvader.domain.board.model.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotEmpty;

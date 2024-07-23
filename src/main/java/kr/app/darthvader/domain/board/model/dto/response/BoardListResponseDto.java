@@ -1,4 +1,4 @@
-package kr.app.darthvader.domain.board.model.dto;
+package kr.app.darthvader.domain.board.model.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.querydsl.core.annotations.QueryProjection;
@@ -11,13 +11,12 @@ import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
-public class BoardDetailDto {
+public class BoardListResponseDto {
 
     @JsonProperty("board_seq")
     private Long boardSeq;
 
     private String title;
-    private String content;
 
     @JsonProperty("create_date")
     private LocalDateTime createdDate;
@@ -32,9 +31,8 @@ public class BoardDetailDto {
     private String updateAt;
 
     @QueryProjection
-    public BoardDetailDto(@NonNull Tboard board) {
+    public BoardListResponseDto(@NonNull Tboard board) {
         this.title = board.getTitle();
-        this.content = board.getContent();
         this.boardSeq = board.getId();
         this.createAt = board.getCreatedBy();
         this.updateAt = board.getUpdateBy();
