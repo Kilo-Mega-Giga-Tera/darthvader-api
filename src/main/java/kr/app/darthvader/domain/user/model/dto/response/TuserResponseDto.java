@@ -7,12 +7,24 @@ import lombok.Data;
 @Data
 public class TuserResponseDto {
 
+    @JsonProperty("user_seq")
+    private Long userSeq;
+
     @JsonProperty("user_id")
     private String userId;
+
     private String name;
+
     private String role;
 
     @QueryProjection
+    public TuserResponseDto(Long userSeq, String userId, String name, String role) {
+        this.userSeq = userSeq;
+        this.userId = userId;
+        this.name = name;
+        this.role = role;
+    }
+
     public TuserResponseDto(String userId, String name, String role) {
         this.userId = userId;
         this.name = name;

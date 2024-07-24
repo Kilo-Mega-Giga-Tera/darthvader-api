@@ -17,7 +17,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
     @Override
     public List<TuserResponseDto> selectUser() {
         return query
-                .select(new QTuserResponseDto(tuser.userId,
+                .select(new QTuserResponseDto(tuser.seq, tuser.userId,
                         tuser.userNm,
                         tuser.role))
                 .from(tuser)
@@ -29,7 +29,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
     @Override
     public TuserResponseDto selectUserById(String userId) {
         return query
-                .select(new QTuserResponseDto(tuser.userId,
+                .select(new QTuserResponseDto(tuser.seq, tuser.userId,
                         tuser.userNm,
                         tuser.role))
                 .from(tuser)
