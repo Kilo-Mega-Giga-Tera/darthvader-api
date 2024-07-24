@@ -1,7 +1,7 @@
 package kr.app.darthvader.global.error.advice;
 
-import kr.app.darthvader.global.error.exception.UserMessageException;
 import kr.app.darthvader.domain.common.model.dto.ErrorResult;
+import kr.app.darthvader.global.error.exception.UserMessageException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -17,23 +17,28 @@ public class ControllerAdvice {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ErrorResult<Map<String, Object>> methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
-        String error = Optional.ofNullable(e.getBindingResult().getFieldError()).map(DefaultMessageSourceResolvable::getDefaultMessage).orElse("시스템에러");
+        String error = Optional.ofNullable(e.getBindingResult().getFieldError())
+                .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                .orElse("시스템에러");
         return new ErrorResult<>(Map.of("message", error, "status", String.valueOf(HttpStatus.BAD_REQUEST.value())));
     }
 
     @ExceptionHandler(NoResourceFoundException.class)
     public ErrorResult<Map<String, Object>> noResourceFoundExceptionHandler() {
-        return new ErrorResult<>(Map.of("message", "페이지를 찾을 수 없습니다", "status", String.valueOf(HttpStatus.NOT_FOUND.value())));
+        return new ErrorResult<>(Map.of("message", "페이지를 찾을 수 없습니다",
+                "status", String.valueOf(HttpStatus.NOT_FOUND.value())));
     }
 
     @ExceptionHandler(UserMessageException.class)
     public ErrorResult<Map<String, Object>> userMessageExceptionHandler(UserMessageException e) {
-        return new ErrorResult<>(Map.of("message", e.getMessage(), "status", String.valueOf(HttpStatus.BAD_REQUEST.value())));
+        return new ErrorResult<>(Map.of("message", e.getMessage(),
+                "status", String.valueOf(HttpStatus.BAD_REQUEST.value())));
     }
 
     @ExceptionHandler(Exception.class)
     public ErrorResult<Map<String, Object>> exceptionHandler() {
-        return new ErrorResult<>(Map.of("message", "시스템에러", "status", String.valueOf(HttpStatus.BAD_REQUEST.value())));
+        return new ErrorResult<>(Map.of("message", "시스템에러",
+                "status", String.valueOf(HttpStatus.BAD_REQUEST.value())));
     }
 
 }
