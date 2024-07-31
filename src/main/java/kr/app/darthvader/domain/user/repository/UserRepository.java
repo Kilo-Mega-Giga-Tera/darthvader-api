@@ -11,4 +11,6 @@ public interface UserRepository extends JpaRepository<Tuser, Long>, UserReposito
 
     Tuser findBySeq(Long seq);
 
+    Tuser findByUserId(String userId);
+
 }

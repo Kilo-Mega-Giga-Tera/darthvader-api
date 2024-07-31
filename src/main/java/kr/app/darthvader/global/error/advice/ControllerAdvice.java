@@ -4,6 +4,7 @@ import kr.app.darthvader.domain.common.model.dto.ErrorResult;
 import kr.app.darthvader.global.error.exception.UserMessageException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -31,6 +32,12 @@ public class ControllerAdvice {
 
     @ExceptionHandler(UserMessageException.class)
     public ErrorResult<Map<String, Object>> userMessageExceptionHandler(UserMessageException e) {
+        return new ErrorResult<>(Map.of("message", e.getMessage(),
+                "status", String.valueOf(HttpStatus.BAD_REQUEST.value())));
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ErrorResult<Map<String, Object>> userMessageAuthenticationException(AuthenticationException e) {
         return new ErrorResult<>(Map.of("message", e.getMessage(),
                 "status", String.valueOf(HttpStatus.BAD_REQUEST.value())));
     }
