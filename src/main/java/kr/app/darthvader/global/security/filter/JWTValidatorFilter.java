@@ -77,7 +77,6 @@ public class JWTValidatorFilter extends OncePerRequestFilter {
         throw new UserMessageException(message);
     }
 
-
     protected boolean shouldNotFilter(HttpServletRequest request) {
         return request.getRequestURI().contains("/login");
     }
