@@ -43,7 +43,7 @@ public class JWTValidatorFilter extends OncePerRequestFilter {
             String[] token = jwt.split(" ");
 
             if (!SpringSecurityContants.AUTH_TYPE.trim().equals(token[0])) {
-                exceptionHandler(response, "유효하지 않은 인증 타입입니다.");
+                exceptionHandler(response, "유효하지 않은 인증 타입입니다");
             }
 
             SecretKey key = Keys.hmacShaKeyFor(SpringSecurityContants.JWT_KEY.getBytes(StandardCharsets.UTF_8));
@@ -62,7 +62,7 @@ public class JWTValidatorFilter extends OncePerRequestFilter {
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
         } catch (Exception e) {
-            exceptionHandler(response, "유효하지 않은 인증 정보입니다.");
+            exceptionHandler(response, "유효하지 않은 인증 정보입니다");
         }
 
         filterChain.doFilter(request, response);
