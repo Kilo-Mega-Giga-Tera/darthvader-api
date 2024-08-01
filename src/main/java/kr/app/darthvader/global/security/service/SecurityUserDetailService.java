@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class SecurityUserDetailService implements UserDetailsService {
@@ -18,13 +20,8 @@ public class SecurityUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Tuser user = userRepository.findByUserId(username);
-
-        if (ObjectUtils.isEmpty(user)) {
-            return null;
-        }
-
-        return new SecurityUserDetails(user);
+        Optional<Tuser> user = userRepository.findByUserId(username);
+        return new SecurityUserDetails(user.orElseThrow(() -> new UsernameNotFoundException("아이디 또는 비밀번호가 일치하지 않습니다")));
     }
 
 }
