@@ -3,10 +3,11 @@ package kr.app.darthvader.global.security.dto;
 import kr.app.darthvader.domain.user.model.entity.Tuser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 @RequiredArgsConstructor
 public class SecurityUserDetails implements UserDetails {
@@ -15,9 +16,7 @@ public class SecurityUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Collection<GrantedAuthority> collection = new ArrayList<>();
-        collection.add((GrantedAuthority) tuser::getRole);
-        return collection;
+        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + tuser.getRole()));
     }
 
     @Override
