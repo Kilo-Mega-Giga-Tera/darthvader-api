@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import kr.app.darthvader.domain.common.model.dto.ErrorResult;
 import kr.app.darthvader.global.error.exception.UserMessageException;
 import kr.app.darthvader.global.security.constants.SpringSecurityContants;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,6 +26,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
+@Slf4j
 public class JWTValidatorFilter extends OncePerRequestFilter {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -73,6 +75,11 @@ public class JWTValidatorFilter extends OncePerRequestFilter {
                 "message", message,
                 "status", String.valueOf(HttpStatus.UNAUTHORIZED.value()))));
         throw new UserMessageException(message);
+    }
+
+
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        return request.getRequestURI().contains("/login");
     }
 
 }
