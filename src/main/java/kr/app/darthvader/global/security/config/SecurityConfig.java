@@ -19,13 +19,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 
 import java.util.Collections;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final String url = "http://localhost";
+    private final String url = "http://localhost:5173";
 
     private final AuthenticationConfiguration authenticationConfiguration;
 
@@ -46,9 +47,10 @@ public class SecurityConfig {
                 .cors((cors) -> cors.configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
                     config.setAllowedOrigins(Collections.singletonList(url));
-                    config.setAllowedMethods(Collections.singletonList("*"));
+                    config.setAllowedHeaders(List.of("GET", "POST", "PUT", "DELETE"));
                     config.setAllowCredentials(true);
-                    config.setAllowedHeaders(Collections.singletonList("*"));
+                    config.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type"));
+                    config.setExposedHeaders(List.of("Authorization"));
                     config.setMaxAge(3600L);
                     return config;
                 }))
