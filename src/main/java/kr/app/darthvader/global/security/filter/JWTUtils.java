@@ -29,7 +29,7 @@ public class JWTUtils {
 
     public static Claims validator(String token) {
         if (ObjectUtils.isEmpty(token)) {
-            throw new UserMessageException("토큰을 확인하세요");
+            throw new UserMessageException("인증정보를 확인하세요");
         }
 
         token = token.substring(7);

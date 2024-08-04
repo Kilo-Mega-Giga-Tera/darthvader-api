@@ -28,7 +28,7 @@ public class JwtController {
                                             @RequestHeader("Authorization") String accessToken) {
 
         if (ObjectUtils.isEmpty(accessToken) || ObjectUtils.isEmpty(request.getCookies())) {
-            throw new UserMessageException("다시 로그인 해주세요(토큰 정보 에러1)");
+            throw new UserMessageException("다시 로그인 해주세요(인증 정보 에러1)");
         }
 
         List<String> cookies = Arrays.stream(request.getCookies())
@@ -36,7 +36,7 @@ public class JwtController {
                 .toList();
 
         if (ObjectUtils.isEmpty(cookies)) {
-            throw new UserMessageException("다시 로그인 해주세요(토큰 정보 에러2)");
+            throw new UserMessageException("다시 로그인 해주세요(인증 정보 에러2)");
         }
 
         String nonBearerRefreshToken = cookies.get(0);
@@ -53,8 +53,6 @@ public class JwtController {
 
         // Access token not expires
         if (isAccess) {
-            response.setHeader("Authorization", accessToken);
-
             // Refresh token need re-create
             if (refreshTokenExprChk(refreshToken)) {
                 Claims accessClaims = JWTUtils.validator(accessToken);
@@ -65,6 +63,7 @@ public class JwtController {
                 response.addCookie(cookie);
             }
 
+            response.setHeader("Authorization", accessToken);
             return Map.of("token", Map.of("access_token", nonBearerAccessToken));
         }
 
@@ -93,7 +92,7 @@ public class JwtController {
             if (e.getClass().getSimpleName().equals("ExpiredJwtException")) {
                 return false;
             }
-            throw new UserMessageException("다시 로그인 해주세요(토큰 정보 에러3)");
+            throw new UserMessageException("다시 로그인 해주세요(인증 정보 에러3)");
         }
     }
 
