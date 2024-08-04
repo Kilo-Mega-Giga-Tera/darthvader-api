@@ -4,14 +4,18 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import kr.app.darthvader.domain.user.model.dto.request.TuserResponseDto;
 import kr.app.darthvader.global.error.exception.UserMessageException;
 import kr.app.darthvader.global.security.constants.SpringSecurityContants;
 import org.springframework.util.ObjectUtils;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.Objects;
 
 public class JWTUtils {
 
@@ -48,6 +52,12 @@ public class JWTUtils {
         cookie.setPath("/refresh-token");
 
         return cookie;
+    }
+
+    public static String getUsername() {
+        HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
+        Claims claims = validator(Objects.requireNonNull(request).getHeader("Authorization"));
+        return claims.get("username", String.class);
     }
 
 }
