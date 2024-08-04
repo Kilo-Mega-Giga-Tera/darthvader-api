@@ -3,11 +3,12 @@ package kr.app.darthvader.global.security.filter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.app.darthvader.domain.common.model.dto.ErrorResult;
+import kr.app.darthvader.domain.user.model.dto.request.TuserResponseDto;
 import kr.app.darthvader.global.error.exception.UserMessageException;
-import kr.app.darthvader.global.security.constants.SpringSecurityContants;
 import kr.app.darthvader.global.security.dto.SecurityUserDetails;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -57,14 +58,26 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         GrantedAuthority auth = iterator.next();
         String role = auth.getAuthority();
 
-        String jwt = SpringSecurityContants.AUTH_TYPE + JWTGenerator.Gen(username, role);
-        response.addHeader("Authorization", jwt);
+        TuserResponseDto dto = new TuserResponseDto(username, role);
 
+        // Create access token
+        String accessToken = JWTUtils.tokenGenerator(dto, 10L);
+
+        // Set header
+        response.addHeader("Authorization", accessToken);
         response.setStatus(HttpStatus.OK.value());
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
+
+        // Create refresh token
+        String refreshToken = JWTUtils.tokenGenerator(dto, 60L * 24L * 5L);
+        Cookie cookie = JWTUtils.refreshTokenCookieGenerator(refreshToken);
+
+        // Add cookie
+        response.addCookie(cookie);
+
         objectMapper.writeValue(response.getWriter(), new ErrorResult<>(Map.of(
-                "token", jwt)));
+                "access_token", accessToken)));
     }
 
     @Override

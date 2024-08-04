@@ -27,7 +27,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 @Slf4j
-public class JWTValidatorFilter extends OncePerRequestFilter {
+public class JWTFilter extends OncePerRequestFilter {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -78,7 +78,8 @@ public class JWTValidatorFilter extends OncePerRequestFilter {
     }
 
     protected boolean shouldNotFilter(HttpServletRequest request) {
-        return request.getRequestURI().contains("/login");
+        return request.getRequestURI().startsWith("/login")
+                || request.getRequestURI().startsWith("/refresh-token");
     }
 
 }

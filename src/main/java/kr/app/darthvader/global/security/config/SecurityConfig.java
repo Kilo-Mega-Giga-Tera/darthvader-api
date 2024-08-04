@@ -1,6 +1,6 @@
 package kr.app.darthvader.global.security.config;
 
-import kr.app.darthvader.global.security.filter.JWTValidatorFilter;
+import kr.app.darthvader.global.security.filter.JWTFilter;
 import kr.app.darthvader.global.security.filter.LoginFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -56,10 +56,10 @@ public class SecurityConfig {
                 }))
                 .csrf(CsrfConfigurer::disable)
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/join", "/login").permitAll()
+                        .requestMatchers("/join", "/login", "/refresh-token").permitAll()
                         .anyRequest().authenticated()
                 )
-                .addFilterBefore(new JWTValidatorFilter(), LoginFilter.class)
+                .addFilterBefore(new JWTFilter(), LoginFilter.class)
                 .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration)), UsernamePasswordAuthenticationFilter.class)
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable);
