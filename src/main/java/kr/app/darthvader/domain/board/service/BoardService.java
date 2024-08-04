@@ -17,7 +17,7 @@ import org.springframework.util.ObjectUtils;
 import java.util.List;
 import java.util.Optional;
 
-import static kr.app.darthvader.global.security.filter.JWTUtils.getUsername;
+import static kr.app.darthvader.global.security.filter.JWTUtils.simpleGetUsername;
 
 @Service
 @RequiredArgsConstructor
@@ -29,7 +29,7 @@ public class BoardService {
 
     @Transactional
     public BoardResponseDto saveBoard(BoardRequestDto dto) {
-        Optional<Tuser> user = userRepository.findByUserId(getUsername());
+        Optional<Tuser> user = userRepository.findByUserId(simpleGetUsername());
 
         user.orElseThrow(() -> new RuntimeException("등록된 회원이 아닙니다"));
 

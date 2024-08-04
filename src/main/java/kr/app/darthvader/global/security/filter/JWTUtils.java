@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import kr.app.darthvader.domain.user.model.dto.request.TuserResponseDto;
 import kr.app.darthvader.global.error.exception.UserMessageException;
 import kr.app.darthvader.global.security.constants.SpringSecurityContants;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -54,10 +55,15 @@ public class JWTUtils {
         return cookie;
     }
 
+    @Deprecated
     public static String getUsername() {
         HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
         Claims claims = validator(Objects.requireNonNull(request).getHeader("Authorization"));
         return claims.get("username", String.class);
+    }
+
+    public static String simpleGetUsername() {
+        return (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
 }
