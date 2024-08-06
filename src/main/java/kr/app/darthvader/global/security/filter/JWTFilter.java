@@ -2,8 +2,6 @@ package kr.app.darthvader.global.security.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,9 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.crypto.SecretKey;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 @Slf4j
@@ -46,13 +42,7 @@ public class JWTFilter extends OncePerRequestFilter {
                 exceptionHandler(response, "유효하지 않은 인증 타입입니다");
             }
 
-            SecretKey key = Keys.hmacShaKeyFor(SpringSecurityContants.JWT_KEY.getBytes(StandardCharsets.UTF_8));
-
-            Claims claims = Jwts.parser()
-                    .verifyWith(key)
-                    .build()
-                    .parseSignedClaims(token[1])
-                    .getPayload();
+            Claims claims = JWTUtils.validator(jwt);
 
             String username = claims.get("username", String.class);
             String authorities = claims.get("authorities", String.class);
